@@ -4,7 +4,6 @@ $files = Get-ChildItem | ForEach-Object {
     }
 }
 
-$index = 0
 $components = $files | ForEach-Object {
     "<Component><File Source=`"" + $_ + "`" /></Component>"        
 }
