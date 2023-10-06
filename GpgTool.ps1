@@ -27,7 +27,7 @@ function RestoreGpgKeyring {
         Return
     }
 
-    #gpg --import-options restore --import PATH/TO/BACKUP/keyring.gpg
+    gpg --import-options restore --import $filePath
 }
 
 $action = $args[0]
