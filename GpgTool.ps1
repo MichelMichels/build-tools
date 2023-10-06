@@ -16,24 +16,28 @@ function BackupGpgKeyring {
         $null = New-Item $directory -ItemType Directory
     }
 
+    $privatePath = Join-Path -Path $directory -ChildPath "myprivatekeys.asc"
+    $publicPath = Join-Path -Path $directory -ChildPath "mypubkeys.asc"
+    $trustPath = Join-Path -Path $directory -ChildPath "otrust.txt"
+
     ## Export all public keys
-    gpg -a --export >mypubkeys.asc
+    gpg -a --export $publicPath
 
     ## Export all encrypted private keys (which will also include corresponding public keys)
-    gpg -a --export-secret-keys >myprivatekeys.asc
+    gpg -a --export-secret-keys $privatePath
 
     ## Export gpg's trustdb to a text file
-    gpg --export-ownertrust >otrust.txt
+    gpg --export-ownertrust $trustPath
 
     $compress = @{
-        Path             = ".\mypubkeys.asc", ".\myprivatekeys.asc", ".\otrust.txt"
+        Path             = $privatePath, $publicPath, $trustPath
         CompressionLevel = "Fastest"
         DestinationPath  = $filePath
     }
     Compress-Archive $compress
-    Remove-Item ".\mypubkeys.asc"
-    Remove-Item ".\myprivatekeys.asc"
-    Remove-Item ".\otrust.txt"    
+    Remove-Item $publicPath
+    Remove-Item $privatePath
+    Remove-Item $trustPath
 }
 
 function RestoreGpgKeyring {
