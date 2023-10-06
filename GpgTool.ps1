@@ -29,6 +29,8 @@ function BackupGpgKeyring {
     ## Export gpg's trustdb to a text file
     gpg --export-ownertrust >$trustPath
 
+    Get-Content $trustPath | Where-Object { $_ } | Set-Content $trustPath
+
     Compress-Archive $privatePath, $publicPath, $trustPath -DestinationPath $filePath
     Remove-Item $publicPath
     Remove-Item $privatePath
