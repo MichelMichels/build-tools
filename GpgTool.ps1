@@ -4,7 +4,7 @@ function BackupGpgKeyring {
     If ($null -eq $filePath) {
         Write-Host "Please provide an export zip file path as argument."
         Write-Host
-        Write-Host "Ex.: GpgTools C:\mykeys.zip"
+        Write-Host "Ex.: GpgTools backup C:\mykeys.zip"
         Return
     }
 
@@ -21,20 +21,15 @@ function BackupGpgKeyring {
     $trustPath = Join-Path -Path $directory -ChildPath "otrust.txt"
 
     ## Export all public keys
-    gpg -a --export $publicPath
+    gpg -a --export --output $publicPath
 
     ## Export all encrypted private keys (which will also include corresponding public keys)
-    gpg -a --export-secret-keys $privatePath
+    gpg -a --export-secret-keys --output $privatePath
 
     ## Export gpg's trustdb to a text file
-    gpg --export-ownertrust $trustPath
+    gpg --export-ownertrust >$trustPath
 
-    $compress = @{
-        Path             = $privatePath, $publicPath, $trustPath
-        CompressionLevel = "Fastest"
-        DestinationPath  = $filePath
-    }
-    Compress-Archive $compress
+    Compress-Archive $privatePath, $publicPath, $trustPath -DestinationPath $filePath
     Remove-Item $publicPath
     Remove-Item $privatePath
     Remove-Item $trustPath
