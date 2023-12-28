@@ -2,35 +2,7 @@
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
   "blocks": [
     {
-      "alignment": "right",
-      "segments": [
-        {
-          "foreground": "#007acc",
-          "style": "plain",
-          "template": "{{ .Name }}",
-          "type": "shell"
-        },
-        {
-          "foreground": "#ff8080",
-          "style": "plain",
-          "template": " <#757575,>as</> root",
-          "type": "root"
-        },
-        {
-          "foreground": "#689f38",
-          "properties": {
-            "time_format": "15:04:05"
-          },
-          "style": "plain",
-          "template": " <#757575,>|</> {{ .CurrentDate | date .Format }}",
-          "type": "time"
-        }
-      ],
-      "type": "prompt"
-    },
-    {
       "alignment": "left",
-      "newline": true,
       "segments": [
         {
           "foreground": "#757575",
@@ -93,6 +65,33 @@
           "style": "powerline",
           "template": " error ",
           "type": "status"
+        }
+      ],
+      "type": "prompt"
+    },
+    {
+      "alignment": "right",
+      "segments": [
+        {
+          "foreground": "#007acc",
+          "style": "plain",
+          "template": "{{ .Name }}",
+          "type": "shell"
+        },
+        {
+          "foreground": "#ff8080",
+          "style": "plain",
+          "template": " <#757575,>as</> root",
+          "type": "root"
+        },
+        {
+          "foreground": "#689f38",
+          "properties": {
+            "time_format": "15:04:05"
+          },
+          "style": "plain",
+          "template": " <#757575,>|</> {{ .CurrentDate | date .Format }}",
+          "type": "time"
         }
       ],
       "type": "prompt"
